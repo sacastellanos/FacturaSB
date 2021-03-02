@@ -33,10 +33,7 @@ namespace BLFacturacionSB
             {
                 return resultado;
             }
-            if (cliente.Id == 0)
-            {
-                cliente.Id = ListaCliente.Max(item => item.Id) + 1;
-            }
+           
                 _contexto.SaveChanges();
 
                 resultado.Exitoso = true;
