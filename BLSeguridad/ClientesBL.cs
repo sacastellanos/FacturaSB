@@ -26,13 +26,22 @@ namespace BLFacturacionSB
             return ListaCliente;
         }
 
-        public bool GuardarCliente(Cliente cliente)
+        public Resultado GuardarCliente(Cliente cliente)
         {
+            var resultado = Validar(cliente);
+            if (resultado.Exitoso == false)
+            {
+                return resultado;
+            }
             if (cliente.Id == 0)
             {
                 cliente.Id = ListaCliente.Max(item => item.Id) + 1;
             }
-                return true;
+                _contexto.SaveChanges();
+
+                resultado.Exitoso = true;
+                return resultado;
+                                        
         }
 
         public void AgregarCliente()
@@ -49,15 +58,62 @@ namespace BLFacturacionSB
                 if (cliente.Id == id)
                 {
                     ListaCliente.Remove(cliente);
+                    _contexto.SaveChanges();
                     return true;
                    }
                 }
                 
                     return false;
             }
+
+        private Resultado Validar(Cliente cliente)
+        {
+            var resultado = new Resultado();
+            resultado.Exitoso = true;
+
+            if (cliente.RazonSocial == "")
+        {
+                resultado.Mensaje = "Ingrese una Descripcion";
+                resultado.Exitoso = false;
+            }
+            if (cliente.RtnCliente=="")
+            {
+                resultado.Mensaje = "Ingrese RTN";
+                resultado.Exitoso = false;
+            }
+
+            if (cliente.RtnCliente == "")
+            {
+                resultado.Mensaje = "Ingrese RTN";
+                resultado.Exitoso = false;
+            }
+
+            if (cliente.Nombrecont == "")
+            {
+                resultado.Mensaje = "Ingrese Contacto";
+                resultado.Exitoso = false;
+            }
+
+            if (cliente.Telefono == "")
+            {
+                resultado.Mensaje = "Ingrese Contacto";
+                resultado.Exitoso = false;
+            }
+
+            if (cliente.TipoCliente == "")
+            {
+                resultado.Mensaje = "Defina tipo de Cliente";
+                resultado.Exitoso = false;
+            }
+
+            return resultado;
+
+        }
     }
-    
-      
+
+
+ 
+
     public class Cliente
     {
         public int Id { get; set; }
@@ -71,5 +127,13 @@ namespace BLFacturacionSB
         public string Telefono { get; set; }
         public bool Activo { get; set; }
     }
-  }
+
+    public class Resultado
+    {
+        public bool Exitoso { get; set; }
+        public string Mensaje { get; set; }
+
+    }
+
+}
 

@@ -1,9 +1,8 @@
-﻿using BLFacturacionSB;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace BLFacturacionSB
-    {
+{
     class Contexto : DbContext
     {
         public Contexto() : base("Clientes")
