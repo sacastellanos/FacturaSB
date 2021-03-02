@@ -108,6 +108,9 @@ namespace FacturacionSB
             if (resultado.Exitoso == true)
             {
                 listaClienteBindingSource.ResetBindings(false);
+                DeshabilitarHabilitarBotones(true);
+                MessageBox.Show("Almacenamiento con Exitoso");
+
             }
             else
             {
